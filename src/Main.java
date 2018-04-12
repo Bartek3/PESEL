@@ -7,15 +7,8 @@ public class Main {
         System.out.println("Wprowadź numer PESEL składający się z 11 cyfr.");
         int controlNumber = 0;
         int[] controlMultipliers = new int[]{1, 3, 7, 9, 1, 3, 7, 9, 1, 3, 1};
-        Long input = 0L;
 
-        if (in.hasNextLong()) {
-            input = in.nextLong();
-        } else {
-            System.out.println("Wprowadzono nieprawidłowy numer PESEL!");
-            System.exit(1);
-        }
-        String inputString = input.toString();
+        String inputString = in.next();
 
         if (inputString.length() != 11) {
             System.out.println("Wprowadzono numer o nieprawidłowej długości!");
@@ -23,7 +16,12 @@ public class Main {
         }
 
         for (int i = 0; i < 11; i++) {
-            controlNumber += Character.getNumericValue(inputString.charAt(i)) * controlMultipliers[i];
+            if (Character.isDigit(inputString.charAt(i)))
+                controlNumber += Character.getNumericValue(inputString.charAt(i)) * controlMultipliers[i];
+            else {
+                System.out.println("Wprowadzono błędny numer!");
+                System.exit(1);
+            }
         }
 
         if (controlNumber % 10 == 0) {
